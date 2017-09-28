@@ -279,7 +279,7 @@ def fixup_pth_file(filename, old_dir, new_dir):
     if has_change:
         with open(filename, 'w') as f:
             payload = os.linesep.join([l.strip() for l in lines]) + os.linesep
-            f.write(payload.encode('utf-8'))
+            f.write(payload)
 
 
 def fixup_egglink_file(filename, old_dir, new_dir):
