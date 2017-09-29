@@ -262,13 +262,13 @@ def fixup_syspath_items(syspath, old_dir, new_dir):
 def fixup_pth_file(filename, old_dir, new_dir):
     logger.debug('fixup_pth_file %s' % filename)
 
-    with open(filename, 'rb') as f:
+    with open(filename, 'r') as f:
         lines = f.readlines()
 
     has_change = False
 
     for num, line in enumerate(lines):
-        line = line.decode('utf-8').strip()
+        line = (line.decode('utf-8') if hasattr(line, 'decode') else line).strip()
 
         if not line or line.startswith('#') or line.startswith('import '):
             continue

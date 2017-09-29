@@ -194,7 +194,7 @@ if __name__ == '__main__':
     def test_fixup_pth_file(self):
         '''Prior to version 0.2.7, the method fixup_pth_file() wrongly wrote unicode files'''
 
-        content = '\n'.join(('/usr/local/bin/someFile', '/usr/local/someOtherFile', ''))
+        content = os.linesep.join(('/usr/local/bin/someFile', '/tmp/xyzzy', '/usr/local/someOtherFile', ''))
         pth = '/tmp/test_fixup_pth_file.pth'
 
         with open(pth, 'w') as fd:
@@ -211,7 +211,7 @@ if __name__ == '__main__':
         time.sleep(2)
         clonevirtualenv.fixup_pth_file(pth, '/usr/local', '/usr/xyzzy')
         newStat = os.stat(pth)
-        assert orgStat[stat.ST_MTIME] != newStat[stat.ST_MTIME]  # File has changed
-        assert orgStat[stat.ST_SIZE] == newStat[stat.ST_SIZE]  # Size is still the same
+        assert orgStat[stat.ST_MTIME] != newStat[stat.ST_MTIME]  # File should have changed
+        assert orgStat[stat.ST_SIZE] == newStat[stat.ST_SIZE]  # Substituting local->xyzzy - size should be the same
 
         os.remove(pth)
